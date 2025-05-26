@@ -1,0 +1,13 @@
+{
+  "name": "js-test",
+  "version": "0.0.1",
+  "description": "",
+  "license": "",
+  "author": "",
+  "scripts": {
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

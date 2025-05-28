@@ -27,13 +27,13 @@ test.each`
 
 test.each`
   source | bannedWords | expected
-  ${'hello mockist'} | ${['mockist', 'purist']} | ${'hello ******'}
+  ${'hello mockist'} | ${['mockist', 'purist']} | ${'hello *******'}
   ${'hello purist'} | ${['mockist', 'purist']} | ${'hello ******'}
   `('sut transforms "$source" to $"expected"',
   ({ source, bannedWords, expected }) => {
     const actual = sut(source, { bannedWords });
     expect(actual).toBe(expected);
-  });
+});
 
 
 describe('given bannerd word', () => {

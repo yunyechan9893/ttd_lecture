@@ -1,19 +1,24 @@
-function refineText(s, options) {
-  s = s.replace("       ", " ")
-    .replace("    ", " ")
-    .replace("\t", " ")
-    .replace("   ", " ")
-    .replace("  ", " ")
-    .replace("purist", "******")
-    .replace("mockist", "******")
+function refineText(source, options) {
+  return [normalizeWhiteSpaces, compactWhiteSpaces, maskBannedWords].reduce((value, filter) =>
+      filter(value, options),
+    source);
+}
 
-  if (options) {
-    for(const bannedWord of options.bannedWords) {
-      s = s.replace(bannedWord, "*".repeat(bannedWord.length))
-    }
-  }
+function normalizeWhiteSpaces(source) {
+  return source.replace('\t', ' ');
+}
 
-  return s;
+function compactWhiteSpaces(source) {
+  return source.indexOf('  ') < 0 ? source : compactWhiteSpaces(source.replace('  ', ' '));
+}
+
+function maskBannedWords(source, options) {
+  return options ? options.bannedWords.reduce(maskBannedWord, source) : source;
+}
+
+function maskBannedWord(source, bannedWord) {
+  const mask = "*".repeat(bannedWord.length);
+  return source.replace(bannedWord, mask)
 }
 
 module.exports = refineText;
